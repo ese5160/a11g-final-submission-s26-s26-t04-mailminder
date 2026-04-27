@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">MailMinder hardware architecture diagram</title>
+  <desc id="desc">A polished wiring map showing sensors, keypad, LCD, servo lock, and SiWG917 pin assignments.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f8f6; }
+      .panel { fill: #ffffff; stroke: #dbe2e6; stroke-width: 2; }
+      .core { fill: #111418; }
+      .sensor { fill: #eef6f4; stroke: #2e7d74; stroke-width: 2; }
+      .actuator { fill: #fff3f1; stroke: #b7352f; stroke-width: 2; }
+      .pin { fill: #f3f5f4; stroke: #cfd7da; stroke-width: 1.5; }
+      .wire { fill: none; stroke: #65707c; stroke-width: 3; }
+      .wire-teal { fill: none; stroke: #2e7d74; stroke-width: 3; }
+      .wire-red { fill: none; stroke: #b7352f; stroke-width: 3; }
+      .label { fill: #111418; font: 700 24px Inter, Segoe UI, Arial, sans-serif; }
+      .small { fill: #4c5662; font: 500 17px Inter, Segoe UI, Arial, sans-serif; }
+      .tiny { fill: #5b6470; font: 600 14px Inter, Segoe UI, Arial, sans-serif; }
+      .core-title { fill: #f7f8f6; font: 800 34px Inter, Segoe UI, Arial, sans-serif; }
+      .core-sub { fill: #cdd5d7; font: 600 18px Inter, Segoe UI, Arial, sans-serif; }
+      .bus { fill: #111418; font: 800 15px Inter, Segoe UI, Arial, sans-serif; letter-spacing: .04em; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#65707c"/>
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d74"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b7352f"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="900"/>
+  <rect class="panel" x="34" y="34" width="1132" height="832" rx="26"/>
+
+  <text class="label" x="72" y="91">MailMinder hardware wiring map</text>
+  <text class="small" x="72" y="123">GPIO, I2C, SPI, PWM, and the implemented peripherals captured in one system view.</text>
+
+  <rect class="core" x="430" y="272" width="340" height="244" rx="28"/>
+  <text class="core-title" x="486" y="354">SiWG917</text>
+  <text class="core-sub" x="493" y="388">4-layer custom PCBA</text>
+  <rect x="484" y="421" width="232" height="48" rx="24" fill="#2e7d74"/>
+  <text x="520" y="452" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="800">FreeRTOS I/O hub</text>
+
+  <g>
+    <rect class="sensor" x="78" y="180" width="266" height="100" rx="18"/>
+    <text class="label" x="108" y="222">IR break-beam</text>
+    <text class="small" x="108" y="250">Mail-slot insertion</text>
+    <rect class="pin" x="215" y="264" width="109" height="28" rx="14"/>
+    <text class="tiny" x="232" y="283">GPIO8</text>
+  </g>
+  <path class="wire-teal" d="M344 230 C385 230 385 306 430 306" marker-end="url(#arrow-teal)"/>
+  <rect x="360" y="214" width="58" height="26" rx="13" fill="#eef6f4"/>
+  <text class="bus" x="377" y="232">GPIO</text>
+
+  <g>
+    <rect class="sensor" x="78" y="315" width="266" height="100" rx="18"/>
+    <text class="label" x="108" y="357">IMU</text>
+    <text class="small" x="108" y="385">Tamper / motion</text>
+    <rect class="pin" x="196" y="399" width="128" height="28" rx="14"/>
+    <text class="tiny" x="215" y="418">GPIO7 / GPIO6</text>
+  </g>
+  <path class="wire-teal" d="M344 365 C390 365 389 354 430 354" marker-end="url(#arrow-teal)"/>
+  <rect x="361" y="343" width="50" height="26" rx="13" fill="#eef6f4"/>
+  <text class="bus" x="374" y="361">I2C</text>
+
+  <g>
+    <rect class="sensor" x="78" y="450" width="266" height="100" rx="18"/>
+    <text class="label" x="108" y="492">Reed switch</text>
+    <text class="small" x="108" y="520">Door open / closed</text>
+    <rect class="pin" x="212" y="534" width="112" height="28" rx="14"/>
+    <text class="tiny" x="230" y="553">GPIO54</text>
+  </g>
+  <path class="wire-teal" d="M344 500 C392 500 390 431 430 431" marker-end="url(#arrow-teal)"/>
+  <rect x="359" y="481" width="58" height="26" rx="13" fill="#eef6f4"/>
+  <text class="bus" x="376" y="499">GPIO</text>
+
+  <g>
+    <rect class="sensor" x="78" y="585" width="266" height="126" rx="18"/>
+    <text class="label" x="108" y="627">4x4 keypad</text>
+    <text class="small" x="108" y="655">Local PIN entry</text>
+    <text class="tiny" x="108" y="686">Rows: ULP_GPIO2, GPIO26, GPIO10, GPIO12</text>
+    <text class="tiny" x="108" y="708">Cols: GPIO27, GPIO29, GPIO28, GPIO25</text>
+  </g>
+  <path class="wire-teal" d="M344 648 C390 648 390 478 430 478" marker-end="url(#arrow-teal)"/>
+  <rect x="360" y="619" width="58" height="26" rx="13" fill="#eef6f4"/>
+  <text class="bus" x="377" y="637">GPIO</text>
+
+  <g>
+    <rect class="actuator" x="856" y="202" width="266" height="136" rx="18"/>
+    <text class="label" x="886" y="244">TFT LCD</text>
+    <text class="small" x="886" y="272">Mailbox status display</text>
+    <text class="tiny" x="886" y="303">SCK GPIO52 / CS0 GPIO53</text>
+    <text class="tiny" x="886" y="325">MOSI GPIO57 / DC GPIO55</text>
+  </g>
+  <path class="wire-red" d="M770 320 C814 320 813 270 856 270" marker-end="url(#arrow-red)"/>
+  <rect x="789" y="292" width="48" height="26" rx="13" fill="#fff3f1"/>
+  <text class="bus" x="801" y="310">SPI</text>
+
+  <g>
+    <rect class="actuator" x="856" y="390" width="266" height="100" rx="18"/>
+    <text class="label" x="886" y="432">Servo lock</text>
+    <text class="small" x="886" y="460">Door latch actuation</text>
+    <rect class="pin" x="986" y="474" width="116" height="28" rx="14"/>
+    <text class="tiny" x="1003" y="493">ULP_GPIO5</text>
+  </g>
+  <path class="wire-red" d="M770 408 C814 408 813 440 856 440" marker-end="url(#arrow-red)"/>
+  <rect x="788" y="415" width="58" height="26" rx="13" fill="#fff3f1"/>
+  <text class="bus" x="800" y="433">PWM</text>
+
+</svg>

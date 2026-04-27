@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yubin Guan — MailMinder Embedded Systems Portfolio</title>
+<meta name="description" content="MailMinder portfolio case study by Yubin Guan: a connected smart mailbox with a 4-layer custom PCB, mechanical CAD, FreeRTOS firmware, MQTT-over-TLS, Node-RED dashboard, and OTA update flow on the SiLabs SiWG917." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top">
+      <span class="nav__mark">▣</span>
+      <span class="nav__name">MailMinder</span>
+    </a>
+    <nav class="nav__links">
+      <a href="#overview">Overview</a>
+      <a href="#product">Product</a>
+      <a href="#story">Build story</a>
+      <a href="#schematics">Schematics</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#wiring">Wiring</a>
+      <a href="#validation">Validation</a>
+      <a href="#firmware">Firmware</a>
+      <a href="#software">Software</a>
+      <a href="#cloud">Cloud</a>
+      <a href="#mechanical">Mechanical</a>
+      <a href="#resume">Resume fit</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section id="top" class="hero">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">Portfolio case study · Embedded systems · Spring 2026</p>
+      <h1 class="hero__title">
+        MailMinder:<br />
+        a secure smart mailbox, built from <em>PCB</em> to cloud.
+      </h1>
+      <p class="hero__lede">
+        I built MailMinder as an end-to-end embedded portfolio project on the SiLabs SiWG917:
+        a 4-layer custom PCB, 3D-printed mailbox enclosure, FreeRTOS application, secure
+        MQTT-over-TLS telemetry, Node-RED dashboard, remote unlock, temporary PINs, and
+        HTTP OTAF firmware updates.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#resume">See portfolio fit</a>
+        <a class="btn btn--ghost" href="https://github.com/ese5160/final-project-firmware-s26-t04-mailminder" target="_blank" rel="noopener">GitHub repo →</a>
+      </div>
+      <dl class="hero__meta" aria-label="Project highlights">
+        <div><dt>Role</dt><dd>Firmware, drivers, system integration</dd></div>
+        <div><dt>Stack</dt><dd>SiWG917, FreeRTOS, MQTT/TLS, OTAF, Node-RED</dd></div>
+        <div><dt>Hardware</dt><dd>4-layer PCB, sensors, keypad, servo lock</dd></div>
+      </dl>
+    </div>
+    <figure class="hero__image">
+      <img src="images/g20.jpg" alt="Finished MailMinder enclosure — 3D-printed white box with keypad, LCD screen, and rotary lock" />
+      <figcaption>Finished prototype: keypad, status display, mail slot, and servo lock packaged in a 3D-printed enclosure.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============== AT-A-GLANCE / SLIDE ============== -->
+<section id="overview" class="glance">
+  <div class="container glance__grid">
+    <div class="glance__copy">
+      <p class="eyebrow">Selected project — MailMinder</p>
+      <h2 class="glance__title">What this demonstrates</h2>
+      <ul class="glance__bullets">
+        <li><strong>Full-stack embedded ownership</strong> across sensing, actuation, network security, dashboard UX, and physical packaging</li>
+        <li>
+          Includes:
+          <ul>
+            <li>An <strong>IR break-beam</strong> across the mail slot for sub-50 ms insertion detection</li>
+            <li>An <strong>IMU</strong> for tamper / forced-entry detection</li>
+            <li>A <strong>magnetic reed switch</strong> on the door for open / closed state</li>
+            <li>A <strong>4×4 keypad and TFT display</strong> for local PIN entry and live status</li>
+            <li>A <strong>servo lock</strong> as the secured-door actuator for remote and local unlock flows</li>
+          </ul>
+        </li>
+        <li><strong>Enabled with MQTT-over-TLS cloud connectivity, remote unlock, temporary pickup codes, and HTTP OTAF</strong> — coordinated by a 6-task FreeRTOS application on the SiLabs SiWG917</li>
+      </ul>
+    </div>
+
+    <div class="glance__stack">
+      <figure class="glance__photo glance__photo--back">
+        <img src="images/g20.jpg" alt="Assembled MailMinder enclosure with keypad, display, and servo lock" />
+      </figure>
+      <figure class="glance__photo glance__photo--front">
+        <img src="images/g02.jpg" alt="Custom MailMinder PCBA with SiWG917 module" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROOF TILES ============== -->
+<section id="product" class="proof">
+  <div class="container">
+    <div class="proof__grid">
+      <article class="tile">
+        <p class="tile__kicker">Transport</p>
+        <h3 class="tile__metric">MQTT / TLS</h3>
+        <p class="tile__body">
+          Mailbox events ship over an authenticated TLS link; commands return on the same
+          channel — no polling, no plaintext.
+        </p>
+      </article>
+      <article class="tile">
+        <p class="tile__kicker">Update path</p>
+        <h3 class="tile__metric">HTTP-OTAF</h3>
+        <p class="tile__body">
+          A dedicated OTA task accepts a cloud command, downloads firmware from Azure Blob,
+          and resets after the M4 application update completes.
+        </p>
+      </article>
+      <article class="tile">
+        <p class="tile__kicker">Runtime</p>
+        <h3 class="tile__metric">FreeRTOS · 6 tasks</h3>
+        <p class="tile__body">
+          Sensor, keypad, actuator, LCD/system control, MQTT, and OTA tasks — coordinated by
+          queues, a status mutex, and explicit event handoff.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== NARRATIVE ============== -->
+<section class="narrative">
+  <div class="container narrative__inner">
+    <p class="eyebrow eyebrow--light">Sense. Decide. Act.</p>
+    <h2 class="narrative__title">A mailbox is a tiny distributed system.</h2>
+    <p class="narrative__body">
+      It has to <strong>sense</strong> a parcel without false-triggering on a draft.
+      It has to <strong>decide</strong> whether a door movement is a delivery or a break-in.
+      It has to <strong>act</strong> on a remote unlock within seconds — even when the
+      Wi-Fi just dropped. MailMinder treats each of those as a separate concern, each owned
+      by a single FreeRTOS task, each communicating only through queues and a shared status
+      structure protected by a mutex.
+    </p>
+  </div>
+</section>
+
+<!-- ============== STORYLINE ============== -->
+<section id="story" class="storyline">
+  <div class="container">
+    <p class="eyebrow">Build story</p>
+    <div class="storyline__grid">
+      <article>
+        <span>01</span>
+        <h3>Idea &amp; BOM</h3>
+        <p>Define the smart-mailbox behavior, choose the sensing stack, actuator, display, keypad, power path, and SiWG917 platform.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>Schematic</h3>
+        <p>Partition the design into power, SiWG917, sensor, display, keypad, and servo interfaces before committing to copper.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>PCB layout</h3>
+        <p>Route the 4-layer board, keep RF and switching-power regions clean, and place headers for bench debug and enclosure wiring.</p>
+      </article>
+      <article>
+        <span>04</span>
+        <h3>PCB bring-up</h3>
+        <p>Validate rails, boost behavior, headers, test wiring, and first peripheral signals on the populated custom PCBA.</p>
+      </article>
+      <article>
+        <span>05</span>
+        <h3>Peripheral drivers</h3>
+        <p>Write and verify drivers for the IR break-beam, IMU, reed switch, keypad matrix, TFT display, and servo lock.</p>
+      </article>
+      <article>
+        <span>06</span>
+        <h3>RTOS integration</h3>
+        <p>Split sensing, input, actuation, display, MQTT, and OTA into owned FreeRTOS tasks with queues and mutex-protected state.</p>
+      </article>
+      <article>
+        <span>07</span>
+        <h3>Node-RED, cloud &amp; OTA</h3>
+        <p>Publish mailbox state over MQTT/TLS, build the Node-RED dashboard, and add cloud-triggered HTTP OTAF updates.</p>
+      </article>
+      <article>
+        <span>08</span>
+        <h3>MCAD integration</h3>
+        <p>Design the printed mailbox body and door, then package the PCB, keypad, display, battery, wiring, and servo into the enclosure.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SCHEMATICS / PCB DESIGN ============== -->
+<section id="schematics" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">Schematics &amp; layout</p>
+    <h2 class="section__title">From schematic to copper.</h2>
+    <p class="section__lede">
+      The design is partitioned for clarity: a <strong>top-level</strong> sheet for power and
+      peripheral hookups, and a dedicated <strong>SiWG917Y</strong> sheet for the MCU itself.
+      The board layout keeps the RF section clear, fans out sensor I/O on the south edge,
+      and routes actuator drive on the east edge.
+    </p>
+
+    <div class="gallery gallery--2">
+      <figure class="card card--wide">
+        <img src="images/g19.jpg" alt="Top-level schematic showing power architecture, USB protection, and sensor/actuator subsheets" />
+        <figcaption><strong>Top-level schematic.</strong> Power architecture, USB protection, sensor &amp; actuator subsheets.</figcaption>
+      </figure>
+      <figure class="card card--wide">
+        <img src="images/g18.jpg" alt="SiWG917Y wireless microcontroller schematic — power section, RF & control, debug headers" />
+        <figcaption><strong>SiWG917Y subsheet.</strong> MCU power section, RF &amp; control, JTAG / Segger debug headers.</figcaption>
+      </figure>
+      <figure class="card card--wide">
+        <img src="images/g15.jpg" alt="PCB layout view — top and bottom copper, silkscreen, component placement" />
+        <figcaption><strong>Layout.</strong> 4-layer PCB stackup, RF kept clear of switching nodes, sensor I/O grouped south.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HARDWARE / PCBA ============== -->
+<section id="hardware" class="section section--paper">
+  <div class="container">
+    <p class="eyebrow">Hardware</p>
+    <h2 class="section__title">A custom PCBA, designed for one job.</h2>
+    <p class="section__lede">
+      The MailMinder 4-layer PCBA carries the SiWG917 wireless MCU, a USB-C power inlet, an
+      SD-card slot for local storage experiments, and connectors for every peripheral the firmware
+      drives: IR break-beam, IMU, magnetic switch, keypad, LCD, and servo.
+      Boards were brought up from bare copper to bench-tested integration in three weeks.
+    </p>
+
+    <div class="gallery gallery--3">
+      <figure class="card">
+        <img src="images/g02.jpg" alt="Top side of populated MailMinder PCBA showing SiWG917 module, USB-C, and SD card slot" />
+        <figcaption><strong>4-layer PCBA — top.</strong> SiWG917 module, USB-C, SD-card slot, and breakout headers.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g01.jpg" alt="Bottom of MailMinder PCBA with team silkscreen — Team 04, MailMinder, Haoliang, Yubin" />
+        <figcaption><strong>4-layer PCBA — bottom.</strong> Silkscreen credit: Team 04 — MailMinder · Haoliang · Yubin.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g16.jpg" alt="3D render of populated PCB top side from EDA tool" />
+        <figcaption><strong>3D — top.</strong> EDA render confirming connector placement and clearances.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g17.jpg" alt="3D render of PCB bottom side showing routing and silkscreen branding" />
+        <figcaption><strong>3D — bottom.</strong> Bottom-layer routing matched to the team silkscreen.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g04.jpg" alt="MailMinder PCBA with first sensor wires soldered for early bring-up" />
+        <figcaption><strong>First wires.</strong> Initial bring-up — power, programming, and the first sensor lines.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g07.jpg" alt="MailMinder PCBA close-up with rainbow ribbon cable feeding the keypad" />
+        <figcaption><strong>Keypad harness.</strong> Ribbon cable carrying the 4×4 keypad rows and columns.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HARDWARE WIRING ============== -->
+<section id="wiring" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">Bench wiring</p>
+    <h2 class="section__title">From pin map to bench harness.</h2>
+    <p class="section__lede">
+      The wiring plan started as a raw block diagram, then became a traceable bench harness:
+      every sensor, keypad row / column, display line, and servo signal was mapped before the
+      enclosure build.
+    </p>
+    <div class="gallery gallery--wiring">
+      <figure class="card card--diagram">
+        <img src="images/hardware_architecture.svg" alt="Polished MailMinder hardware wiring diagram showing GPIO, I2C, SPI, PWM, keypad, LCD, sensors, and servo assignments" />
+        <figcaption><strong>Clean wiring map.</strong> GPIO / I2C / SPI / PWM assignments, pull-up / pulldown choices, and the revised LCD / keypad pinout in one view.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/hardware_connection.JPG" alt="Custom PCBA wired to IR break-beam, IMU, magnetic switch, keypad and servo" />
+        <figcaption><strong>Bench integration.</strong> Keypad matrix, IMU board, servo, IR / reed wiring, and SiWG917 dev hardware exercised together before packaging.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BENCH VALIDATION ============== -->
+<section id="validation" class="cinema">
+  <div class="container">
+    <p class="eyebrow eyebrow--light">Power bring-up</p>
+    <h2 class="section__title section__title--light">Isolate the rail, then trust the rest.</h2>
+    <p class="section__lede section__lede--light">
+      Before sensor or cloud integration, the power path was treated as its own subsystem.
+      We isolated the boost section from the rest of the board, removed test-pad shorts where
+      needed, soldered direct measurement leads, then used a bench supply, electronic load,
+      oscilloscope, and thermal camera to prove startup, discharge, load regulation, and hot spots.
+    </p>
+
+    <div class="gallery gallery--3 gallery--dark">
+      <figure class="card card--dark">
+        <img src="images/g03.jpg" alt="Keysight E36441A four-output power supply showing 3.998 V regulated rail" />
+        <figcaption><strong>Bench supply + e-load chain.</strong> 4.0 V source feeding the board while the electronic load monitors the boosted rail.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g08.jpg" alt="Close-up of bench supply with all four outputs configured" />
+        <figcaption><strong>Input rail limit.</strong> Channel 1 configured at 4.000 V / 1.000 A before stressing downstream conversion.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g12.jpg" alt="Keysight EL34143A electronic load measuring 4.847 V at 55 mA from the MailMinder rail" />
+        <figcaption><strong>Electronic-load test.</strong> Constant-current draw at 55 mA verifies the boost output holds around 4.85 V under load.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g09.jpg" alt="Oscilloscope decay trace — RC discharge curve captured on channel 1" />
+        <figcaption><strong>Boost discharge.</strong> Scope capture of the rail falling through its output capacitance after power removal.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g10.jpg" alt="Oscilloscope edge capture — clean rising transition with measured Pk-Pk 5.05 V" />
+        <figcaption><strong>Boost startup.</strong> Startup transient and settling behavior captured around the 5 V rail.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g05.jpg" alt="FLIR TG165-X thermal image of MailMinder PCBA showing hot spots near the regulator and MCU" />
+        <figcaption><strong>Thermal sweep.</strong> FLIR TG165-X confirms the regulator / power section as the dominant heat source during load testing.</figcaption>
+      </figure>
+      <figure class="card card--dark">
+        <img src="images/g13.jpg" alt="MailMinder PCBA on the bench with oscilloscope probes attached for signal capture" />
+        <figcaption><strong>Isolated power-chip test.</strong> Test pads were removed / bypassed and direct wires added so the power IC could be measured apart from other modules.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== THREE MOMENTS ============== -->
+<section id="firmware" class="section section--paper">
+  <div class="container">
+    <h2 class="section__title">Three moments that make MailMinder real.</h2>
+    <div class="moments__grid">
+
+      <article class="moment">
+        <p class="moment__num">01</p>
+        <h3 class="moment__title">Hardware that earns its place</h3>
+        <p class="moment__body">
+          Four peripherals, each chosen for one job: an <strong>IR break-beam</strong>
+          across the mail slot for insertion detection within 50 ms, a
+          <strong>3-axis IMU</strong> for tamper, a <strong>magnetic switch</strong>
+          on the door (≤ 10 mm gap), and a <strong>servo</strong> with ≥ 60° travel
+          for the lock.
+        </p>
+        <ul class="moment__list">
+          <li>HRS-01 — IR break-beam, sub-50 ms detection</li>
+          <li>HRS-02 — Magnetic door, ≤ 10 mm gap</li>
+          <li>HRS-03 — IMU ±2 g, data-ready interrupt</li>
+          <li>HRS-04 — Servo ≥ 60° lock travel</li>
+        </ul>
+      </article>
+
+      <article class="moment">
+        <p class="moment__num">02</p>
+        <h3 class="moment__title">Firmware that survives Wi-Fi</h3>
+        <p class="moment__body">
+          The system-control task is the only place state changes. Sensor, keypad, and
+          Wi-Fi tasks <em>publish events</em> into a control queue; the control task
+          <em>publishes commands</em> into an actuator queue and a cloud queue. A small
+          shared status struct — <code>mail_present</code>, <code>door_state</code>,
+          <code>lock_state</code>, <code>network_state</code>, <code>lockout_active</code>
+          — sits behind a mutex and feeds the local display at ≥ 2 Hz.
+        </p>
+        <ul class="moment__list">
+          <li>SRS-01/02 — IR break-beam confirms delivery in 2–3 s</li>
+          <li>SRS-04 — Offline PIN unlock within 2 s</li>
+          <li>SRS-05 — Authenticated remote unlock within 5 s</li>
+          <li>SRS-06 — 3 strikes → 30 s keypad lockout</li>
+          <li>SRS-10 — Tamper alert published within 5 s</li>
+        </ul>
+      </article>
+
+      <article class="moment">
+        <p class="moment__num">03</p>
+        <h3 class="moment__title">A cloud that talks back</h3>
+        <p class="moment__body">
+          Topics are split by direction. The mailbox publishes
+          <code>delivery</code>, <code>tamper</code>, <code>door_state</code>,
+          <code>lock_state</code>, <code>failed_attempts</code>, and periodic
+          <code>status</code>. The cloud publishes <code>cmd_unlock</code> and
+          <code>cmd_tempcode</code>. Node-RED renders the live state, archives history,
+          and exposes a one-tap remote unlock.
+        </p>
+        <ul class="moment__list">
+          <li>SRS-08 — Door open/close events ≤ 5 s</li>
+          <li>SRS-11 — Periodic status at a configurable interval</li>
+          <li>SRS-12 — Authenticated temporary pickup codes</li>
+          <li>OTA — Node-RED command path into a dedicated HTTP OTAF worker</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SOFTWARE ARCHITECTURE ============== -->
+<section id="software" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">Software architecture</p>
+    <h2 class="section__title">The firmware is more than driver glue.</h2>
+    <p class="section__lede">
+      The current codebase is organized around a state-machine and event-bus model:
+      hardware-facing drivers live under <code>drivers/*</code>, while <code>app/core</code>
+      owns task creation, shared state, MQTT command parsing, cloud publishing, and OTA.
+      Across the application and custom drivers, the project carries roughly 4.7k lines of
+      MailMinder-specific C.
+    </p>
+
+    <div class="moments__grid">
+      <article class="moment">
+        <p class="moment__num">RTOS</p>
+        <h3 class="moment__title">Six tasks, clear ownership</h3>
+        <p class="moment__body">
+          <code>sensor_task</code>, <code>user_input_task</code>, <code>actuator_task</code>,
+          <code>system_control_task</code>, <code>mqtt_task</code>, and <code>ota_task</code>
+          each own one timing domain. Shared state is protected by <code>g_state_mutex</code>,
+          while <code>g_cloud_event_queue</code>, <code>g_actuator_queue</code>, and
+          <code>g_ota_queue</code> keep work decoupled.
+        </p>
+      </article>
+
+      <article class="moment">
+        <p class="moment__num">MQTT</p>
+        <h3 class="moment__title">TLS telemetry and commands</h3>
+        <p class="moment__body">
+          The SiWG917 connects to the broker over TLS 1.2 on port 8883. It publishes status,
+          delivery, door, tamper, lock, failed-attempt, and IMU acceleration topics, while
+          subscribing to <code>cmd_unlock</code>, <code>cmd_tempcode</code>,
+          <code>cmd_clear_tamper</code>, and <code>cmd_ota</code>.
+        </p>
+      </article>
+
+      <article class="moment">
+        <p class="moment__num">STATE</p>
+        <h3 class="moment__title">Mailbox behavior as FSMs</h3>
+        <p class="moment__body">
+          The firmware derives mailbox state from IR, reed, and IMU inputs, then latches
+          tamper until a clear command arrives. Temporary codes use a 64-bit timebase for
+          expiry, and cloud unlocks are paired with automatic re-lock behavior.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CLOUD EVIDENCE ============== -->
+<section id="cloud" class="section section--paper">
+  <div class="container">
+    <p class="eyebrow">Cloud evidence</p>
+    <h2 class="section__title">Live dashboard and real MQTT topics.</h2>
+
+    <div class="gallery gallery--3">
+      <figure class="card">
+        <img src="images/node_red_frontend.png" alt="Current Node-RED MailMinder dashboard with status, mailbox actions, sensor trend, event history, and OTA button" />
+        <figcaption>
+          <strong>Live dashboard.</strong>
+          Current Node-RED UI with system status, temp-code / unlock / tamper-clear actions,
+          sensor trend, event history, and the OTA trigger.
+        </figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/node_red_backend1.png" alt="Node-RED flow handling MQTT topics and command publishes" />
+        <figcaption>
+          <strong>Topic plumbing.</strong>
+          Inbound device topics fan out to dashboard state and event history; outbound
+          commands ride the same broker.
+        </figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/node_red_backend2.png" alt="Second Node-RED flow with command routing and history archival" />
+        <figcaption>
+          <strong>Command routing.</strong>
+          Dashboard actions are mapped into <code>cmd_unlock</code>, <code>cmd_tempcode</code>,
+          <code>cmd_clear_tamper</code>, and <code>cmd_ota</code> topics.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="cinema__links" style="margin-top:36px">
+      <a class="btn btn--ghost" href="http://4.246.123.148:1880/ui/" target="_blank" rel="noopener">Open the live UI →</a>
+      <a class="btn btn--ghost" href="https://drive.google.com/file/d/1Fn-BSGpmjbxcE8X2fidNT2jYQ7OS3igV/view?usp=sharing" target="_blank" rel="noopener">Walkthrough video →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MECHANICAL ============== -->
+<section id="mechanical" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">Mechanical integration</p>
+    <h2 class="section__title">The electronics had to fit the mailbox, not the other way around.</h2>
+    <p class="section__lede">
+      After the electrical and cloud path worked, the design moved into MCAD packaging:
+      a printed enclosure body plus a front mailbox door. The door carries the mail slot
+      and rotating lock geometry, while the body manages the keypad, LCD, PCBA, servo,
+      battery, and cable routing.
+    </p>
+
+    <div class="gallery gallery--2">
+      <figure class="card">
+        <img src="images/g11.jpg" alt="3D CAD render of the MailMinder mailbox door with mail-slot opening and circular lock cutout" />
+        <figcaption><strong>Mailbox door.</strong> Mail-slot opening and circular lock cutout for the front access door.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g14.jpg" alt="3D CAD render of front and side walls of the MailMinder enclosure" />
+        <figcaption><strong>Enclosure body.</strong> Display + keypad cut-outs, side walls, locating pins, and internal packaging space.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g20.jpg" alt="Assembled MailMinder enclosure — keypad, LCD, mail slot, and rotary lock plug" />
+        <figcaption><strong>Outside.</strong> Assembled unit — keypad, display, mail slot, lock.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="images/g21.jpg" alt="Inside of the MailMinder enclosure — PCBA, breadboard, battery, and servo" />
+        <figcaption><strong>Inside.</strong> PCBA + breadboard + battery + servo, packaged into the printed body.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TEAM ============== -->
+<section id="resume" class="team">
+  <div class="container">
+    <p class="eyebrow">Resume fit</p>
+    <h2 class="section__title">Built for embedded, firmware, and IoT roles.</h2>
+
+    <div class="team__grid">
+      <article class="member">
+        <div class="member__avatar">YG</div>
+        <h3 class="member__name">Yubin Guan</h3>
+        <p class="member__role">Firmware · Drivers · System integration</p>
+        <p class="member__body">
+          Brought up the peripheral drivers on the SiWG917 — IR / IMU / magnetic /
+          servo / keypad — and shaped the FreeRTOS task split that keeps every subsystem
+          on its own clock. This project demonstrates low-level debugging, RTOS design,
+          hardware/software integration, and practical product thinking.
+        </p>
+        <p class="member__contact">
+          <a href="mailto:guan1@seas.upenn.edu">guan1@seas.upenn.edu</a> ·
+          <a href="https://github.com/guan1112" target="_blank" rel="noopener">@guan1112</a>
+        </p>
+      </article>
+
+      <article class="member">
+        <div class="member__avatar">HX</div>
+        <h3 class="member__name">Haoliang Xie</h3>
+        <p class="member__role">Cloud · MQTT-TLS · Node-RED · OTA</p>
+        <p class="member__body">
+          Owned the network side — the MQTT topic schema, the TLS-secured broker link,
+          the Node-RED dashboard, and the command paths for remote unlock, temporary codes,
+          clear-tamper, and OTA.
+        </p>
+        <p class="member__contact">
+          <a href="mailto:liang027@seas.upenn.edu">liang027@seas.upenn.edu</a> ·
+          <a href="https://github.com/socold729" target="_blank" rel="noopener">@socold729</a>
+        </p>
+      </article>
+    </div>
+
+    <div class="skill-wall" aria-label="Portfolio skill map">
+      <span>Embedded C</span>
+      <span>FreeRTOS task design</span>
+      <span>Peripheral bring-up</span>
+      <span>4-layer PCB integration</span>
+      <span>MQTT over TLS</span>
+      <span>Node-RED dashboard</span>
+      <span>HTTP OTAF update flow</span>
+      <span>Bench validation</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="foot">
+  <div class="container foot__inner">
+    <p class="foot__brand">▣ MailMinder</p>
+    <p class="foot__meta">
+      Yubin Guan · Team 04 · ESE 5160 Final Project · University of Pennsylvania · Spring 2026
+    </p>
+    <p class="foot__archive">
+      <a href="https://github.com/ese5160/final-project-firmware-s26-t04-mailminder" target="_blank" rel="noopener">
+        Archive on GitHub →
+      </a>
+    </p>
+  </div>
+</footer>
+
+<!-- ============== LIGHTBOX ============== -->
+<div id="lightbox" class="lightbox" aria-hidden="true" role="dialog">
+  <button class="lightbox__close" aria-label="Close">×</button>
+  <img class="lightbox__img" alt="" />
+  <p class="lightbox__cap"></p>
+</div>
+
+<script>
+  // Click any gallery image -> open in lightbox
+  (function () {
+    var lb  = document.getElementById('lightbox');
+    var img = lb.querySelector('.lightbox__img');
+    var cap = lb.querySelector('.lightbox__cap');
+    var btn = lb.querySelector('.lightbox__close');
+
+    document.querySelectorAll('.gallery img, .hero__image img').forEach(function (el) {
+      el.style.cursor = 'zoom-in';
+      el.addEventListener('click', function () {
+        img.src = el.getAttribute('src');
+        img.alt = el.getAttribute('alt') || '';
+        var fc = el.parentElement.querySelector('figcaption');
+        cap.textContent = fc ? fc.textContent.trim() : '';
+        lb.classList.add('is-open');
+        lb.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function close() {
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      img.src = '';
+    }
+    btn.addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+</script>
+
+</body>
+</html>
