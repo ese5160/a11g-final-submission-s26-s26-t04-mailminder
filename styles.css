@@ -262,12 +262,19 @@ code {
   gap: 24px;
   align-items: stretch;
 }
+.video-stack {
+  display: grid;
+  gap: 24px;
+}
 .video-card,
 .summary-card {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 28px 26px;
+}
+.video-card--feature {
+  padding: 32px;
 }
 .video-card__label {
   margin: 0 0 10px;
@@ -298,6 +305,10 @@ code {
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 16 / 9;
+}
+.video-card--feature .video-embed {
+  margin-top: 24px;
+  max-height: 720px;
 }
 .video-embed iframe {
   display: block;
