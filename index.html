@@ -18,17 +18,15 @@
     </a>
     <nav class="nav__links">
       <a href="#overview">Overview</a>
-      <a href="#product">Product</a>
+      <a href="#video">Video</a>
+      <a href="#summary">Summary</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#photos">Photos</a>
       <a href="#story">Build story</a>
-      <a href="#schematics">Schematics</a>
       <a href="#hardware">Hardware</a>
-      <a href="#wiring">Wiring</a>
-      <a href="#validation">Validation</a>
       <a href="#firmware">Firmware</a>
-      <a href="#software">Software</a>
       <a href="#cloud">Cloud</a>
-      <a href="#mechanical">Mechanical</a>
-      <a href="#resume">Resume fit</a>
+      <a href="#links">Links</a>
     </nav>
   </div>
 </header>
@@ -49,17 +47,17 @@
         HTTP OTAF firmware updates.
       </p>
       <div class="hero__cta">
-        <a class="btn btn--primary" href="#resume">See portfolio fit</a>
-        <a class="btn btn--ghost" href="https://github.com/ese5160/final-project-firmware-s26-t04-mailminder" target="_blank" rel="noopener">GitHub repo →</a>
+        <a class="btn btn--primary" href="#video">Watch demo</a>
+        <a class="btn btn--ghost" href="#requirements">See validation</a>
       </div>
       <dl class="hero__meta" aria-label="Project highlights">
-        <div><dt>Role</dt><dd>Firmware, drivers, system integration</dd></div>
+        <div><dt>Team</dt><dd>04 · MailMinder · Haoliang Xie &amp; Yubin Guan</dd></div>
         <div><dt>Stack</dt><dd>SiWG917, FreeRTOS, MQTT/TLS, OTAF, Node-RED</dd></div>
         <div><dt>Hardware</dt><dd>4-layer PCB, sensors, keypad, servo lock</dd></div>
       </dl>
     </div>
     <figure class="hero__image">
-      <img src="images/g20.jpg" alt="Finished MailMinder enclosure — 3D-printed white box with keypad, LCD screen, and rotary lock" />
+      <img src="images/final_project_angle.jpg" alt="Finished MailMinder enclosure — 3D-printed white box with keypad, LCD screen, and rotary lock" />
       <figcaption>Finished prototype: keypad, status display, mail slot, and servo lock packaged in a 3D-printed enclosure.</figcaption>
     </figure>
   </div>
@@ -89,7 +87,7 @@
 
     <div class="glance__stack">
       <figure class="glance__photo glance__photo--back">
-        <img src="images/g20.jpg" alt="Assembled MailMinder enclosure with keypad, display, and servo lock" />
+        <img src="images/final_project_front.jpg" alt="Assembled MailMinder enclosure with keypad, display, and servo lock" />
       </figure>
       <figure class="glance__photo glance__photo--front">
         <img src="images/g02.jpg" alt="Custom MailMinder PCBA with SiWG917 module" />
@@ -126,6 +124,195 @@
           queues, a status mutex, and explicit event handoff.
         </p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== VIDEO PRESENTATION ============== -->
+<section id="video" class="section section--paper">
+  <div class="container">
+    <p class="eyebrow">1. Video presentation</p>
+    <h2 class="section__title">Five-minute demo checklist.</h2>
+    <p class="section__lede">
+      Team 04, MailMinder — Haoliang Xie and Yubin Guan. The demo is structured around the
+      grading checklist: full device integration, mechanical packaging, sensor data to Node-RED,
+      dashboard-controlled actuator actions, and OTA firmware update.
+    </p>
+
+    <div class="video-grid">
+      <article class="video-card">
+        <p class="video-card__label">Current walkthrough link</p>
+        <h3>MailMinder final demo</h3>
+        <p>
+          The current site keeps the walkthrough video link available while the public YouTube
+          upload is finalized. The rubric requires the final video to be public on YouTube with
+          team number, team name, and member names in the description.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="https://drive.google.com/file/d/1Fn-BSGpmjbxcE8X2fidNT2jYQ7OS3igV/view?usp=sharing" target="_blank" rel="noopener">Open walkthrough video</a>
+          <a class="btn btn--ghost" href="#links">Project links</a>
+        </div>
+      </article>
+
+      <div class="checklist" aria-label="Demo coverage checklist">
+        <div><strong>Team identity</strong><span>Team 04 · MailMinder · Haoliang Xie · Yubin Guan</span></div>
+        <div><strong>Full integration</strong><span>Mailbox enclosure, keypad, LCD, sensors, custom PCBA, battery, and servo lock.</span></div>
+        <div><strong>Mechanical design</strong><span>3D-printed body and mailbox door mount the electronics and implement the mail slot / lock interface.</span></div>
+        <div><strong>Sensor telemetry</strong><span>IR, reed, IMU, lock, door, failed-attempt, and status data publish to Node-RED.</span></div>
+        <div><strong>Actuator control</strong><span>Node-RED sends unlock, temporary-code, tamper-clear, and OTA commands over MQTT.</span></div>
+        <div><strong>OTAFU</strong><span>Cloud command triggers the SiWG917 HTTP OTAF worker and M4 firmware update flow.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROJECT SUMMARY ============== -->
+<section id="summary" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">2. Project summary</p>
+    <h2 class="section__title">A connected mailbox with local security and cloud control.</h2>
+    <div class="summary-grid">
+      <article class="summary-card summary-card--wide">
+        <h3>Device description</h3>
+        <p>
+          MailMinder is a smart mailbox built around the SiLabs SiWG917, a 4-layer custom PCBA,
+          FreeRTOS firmware, and a Node-RED cloud dashboard. It detects mail delivery, monitors
+          door and tamper state, supports local keypad unlock, and accepts remote commands for
+          unlock, temporary pickup codes, tamper clear, and OTA firmware update.
+        </p>
+      </article>
+      <article class="summary-card">
+        <h3>Inspiration</h3>
+        <p>
+          The project came from a simple apartment-mail problem: mailboxes usually do not tell
+          you when important letters arrive, so checking them becomes manual, forgettable, and
+          easy to miss.
+        </p>
+      </article>
+      <article class="summary-card">
+        <h3>Internet augmentation</h3>
+        <p>
+          MQTT over TLS turns the mailbox into a two-way IoT device: it publishes delivery,
+          door, lock, tamper, and status events, while Node-RED sends secure remote actions.
+        </p>
+      </article>
+      <article class="summary-card summary-card--wide">
+        <h3>System design</h3>
+        <p>
+          The device uses an IR break-beam for mail-slot events, a reed switch for door state,
+          an IMU for tamper detection, a 4x4 keypad and TFT LCD for local interaction, and a
+          servo lock as the actuator. A FreeRTOS task split separates sensing, keypad input,
+          actuation/display, state control, MQTT, and OTA so each timing domain stays isolated.
+        </p>
+      </article>
+    </div>
+
+    <div class="gallery gallery--wiring" style="margin-top:32px">
+      <figure class="card card--diagram">
+        <img src="images/hardware_architecture.svg" alt="Updated MailMinder system-level block diagram showing sensors, keypad, LCD, servo lock, and SiWG917 connections" />
+        <figcaption><strong>Updated system-level block diagram.</strong> The final implemented system: IR break-beam, IMU, reed switch, keypad, TFT LCD, servo lock, and SiWG917 4-layer PCBA.</figcaption>
+      </figure>
+    </div>
+
+    <div class="summary-grid" style="margin-top:32px">
+      <article class="summary-card">
+        <h3>Challenges</h3>
+        <p>
+          The hardest issues were pin multiplexing and integration: LCD MOSI moved to GPIO57,
+          the IR input moved from GPIO50 to GPIO8 with a 4.7k pull-up, keypad columns needed
+          18k pulldowns, PWM moved to ULP_GPIO5, and the network stack needed reconnection
+          handling in a dedicated task.
+        </p>
+      </article>
+      <article class="summary-card">
+        <h3>Prototype learnings</h3>
+        <p>
+          We learned that pin planning, bring-up test points, and mechanical packaging have to
+          be co-designed early. The FSR idea was removed after testing because letter loads were
+          too distributed for reliable detection on the small sensor area.
+        </p>
+      </article>
+      <article class="summary-card">
+        <h3>Next steps</h3>
+        <p>
+          Improve the door hinge and enclosure tolerances, make keypad scanning more efficient,
+          harden long-runtime MQTT recovery, and explore differential OTA updates to reduce
+          firmware update time.
+        </p>
+      </article>
+      <article class="summary-card">
+        <h3>ESE5160 takeaway</h3>
+        <p>
+          The project connected PCB design, driver bring-up, FreeRTOS tasking, secure networking,
+          OTA, and product-level demo discipline into one complete prototype.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== REQUIREMENTS REVIEW ============== -->
+<section id="requirements" class="section section--paper">
+  <div class="container">
+    <p class="eyebrow">3. Hardware &amp; software requirements</p>
+    <h2 class="section__title">Requirement review and validation.</h2>
+    <p class="section__lede">
+      The table below reviews the original requirements honestly. Some requirements were met as
+      written, while others were changed after testing revealed a better or more practical design.
+    </p>
+
+    <div class="table-wrap">
+      <table class="req-table">
+        <thead>
+          <tr><th>ID</th><th>Status</th><th>Validation / result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HRS-01</td><td><span class="badge badge--changed">Changed</span></td><td>FSR was removed after load testing because letters distributed weight over a larger area than the FSR could reliably sense.</td></tr>
+          <tr><td>HRS-02</td><td><span class="badge badge--met">Met</span></td><td>Reed switch detected open / closed door state at the target closed-position gap.</td></tr>
+          <tr><td>HRS-03</td><td><span class="badge badge--met">Met</span></td><td>IMU provided 3-axis acceleration data for tamper and disturbance monitoring.</td></tr>
+          <tr><td>HRS-04</td><td><span class="badge badge--met">Met</span></td><td>Servo moved between locked and unlocked mechanical positions with at least 60 degrees of travel.</td></tr>
+          <tr><td>HRS-05</td><td><span class="badge badge--changed">Changed</span></td><td>Audible / LED annunciator was not used in the final device; status is shown on LCD, dashboard, and notifications.</td></tr>
+          <tr><td>SRS-01</td><td><span class="badge badge--met">Met</span></td><td>IR break-beam insertion events were detected within the required response window.</td></tr>
+          <tr><td>SRS-02</td><td><span class="badge badge--changed">Changed</span></td><td>FSR confirmation was removed; the final system marks mail present from the IR insertion path and cloud state update.</td></tr>
+          <tr><td>SRS-03</td><td><span class="badge badge--met">Met</span></td><td>Delivery events publish to the cloud over MQTT/TLS when Wi-Fi is available.</td></tr>
+          <tr><td>SRS-04</td><td><span class="badge badge--met">Met</span></td><td>Valid local keypad PIN actuates the servo unlock path without requiring cloud connectivity.</td></tr>
+          <tr><td>SRS-05</td><td><span class="badge badge--met">Met</span></td><td>Authenticated Node-RED remote unlock command actuates the servo over the MQTT command path.</td></tr>
+          <tr><td>SRS-06</td><td><span class="badge badge--changed">Changed</span></td><td>Instead of a 30-second keypad lockout, three failed PIN attempts trigger a cloud / email notification and failed-attempt reporting.</td></tr>
+          <tr><td>SRS-07</td><td><span class="badge badge--met">Met</span></td><td>Local LCD updates mail, lock, door, network, and attempt/status information during operation.</td></tr>
+          <tr><td>SRS-08</td><td><span class="badge badge--met">Met</span></td><td>Door open / close changes publish to Node-RED within the Wi-Fi command / telemetry path.</td></tr>
+          <tr><td>SRS-09</td><td><span class="badge badge--met">Met</span></td><td>Lock and unlock state changes are published to the cloud when the servo state changes.</td></tr>
+          <tr><td>SRS-10</td><td><span class="badge badge--met">Met</span></td><td>IMU-based tamper events are reported to Node-RED through MQTT telemetry.</td></tr>
+          <tr><td>SRS-11</td><td><span class="badge badge--met">Met</span></td><td>Periodic status includes mail presence, door state, lock state, network state, and failed-attempt information.</td></tr>
+          <tr><td>SRS-12</td><td><span class="badge badge--met">Met</span></td><td>Temporary pickup codes can be sent from Node-RED and stored for keypad-based unlock.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PHOTOS & SCREENSHOTS ============== -->
+<section id="photos" class="section section--paper-2">
+  <div class="container">
+    <p class="eyebrow">4. Project photos &amp; screenshots</p>
+    <h2 class="section__title">Submission gallery.</h2>
+    <p class="section__lede">
+      Required project evidence: final prototype photos, standalone PCBA top and bottom,
+      thermal image under load, Altium 2D / 3D views, Node-RED dashboard and backend, and
+      the updated system block diagram.
+    </p>
+
+    <div class="gallery gallery--3">
+      <figure class="card"><img src="images/final_project_angle.jpg" alt="Final MailMinder prototype in light-box style photo" /><figcaption><strong>Final project.</strong> Enclosure, keypad, LCD, mail slot, and servo-lock interface.</figcaption></figure>
+      <figure class="card"><img src="images/final_project_front.jpg" alt="Front view of final MailMinder prototype" /><figcaption><strong>Final project — front.</strong> Integrated casework and user-facing controls.</figcaption></figure>
+      <figure class="card"><img src="images/g02.jpg" alt="Standalone MailMinder PCBA top side" /><figcaption><strong>PCBA top.</strong> 4-layer board with SiWG917, USB-C, SD slot, and peripheral headers.</figcaption></figure>
+      <figure class="card"><img src="images/g01.jpg" alt="Standalone MailMinder PCBA bottom side" /><figcaption><strong>PCBA bottom.</strong> Bottom side with team silkscreen and routing.</figcaption></figure>
+      <figure class="card"><img src="images/thermal_running_load.jpg" alt="Thermal camera image of the running MailMinder board under load" /><figcaption><strong>Thermal under load.</strong> FLIR image captured while the board was powered and running.</figcaption></figure>
+      <figure class="card"><img src="images/altium_2d_view.jpg" alt="Altium PCB design in 2D layout view" /><figcaption><strong>Altium 2D.</strong> Board layout screenshot.</figcaption></figure>
+      <figure class="card"><img src="images/g16.jpg" alt="Altium 3D render top side of the PCBA" /><figcaption><strong>Altium 3D — top.</strong> Component placement and connector clearance.</figcaption></figure>
+      <figure class="card"><img src="images/g17.jpg" alt="Altium 3D render bottom side of the PCBA" /><figcaption><strong>Altium 3D — bottom.</strong> Bottom-side routing and silkscreen view.</figcaption></figure>
+      <figure class="card card--wide"><img src="images/node_red_dashboard_current.png" alt="Node-RED MailMinder dashboard screenshot" /><figcaption><strong>Node-RED dashboard.</strong> Live status, actions, sensor trend, event history, and OTA button.</figcaption></figure>
+      <figure class="card card--wide"><img src="images/node_red_backend_current.png" alt="Node-RED backend flow screenshot" /><figcaption><strong>Node-RED backend.</strong> MQTT input, event processing, email path, command publish, chart, and OTA command nodes.</figcaption></figure>
+      <figure class="card card--diagram"><img src="images/hardware_architecture.svg" alt="Updated MailMinder block diagram" /><figcaption><strong>Block diagram.</strong> Updated final system-level diagram without unused components.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -365,14 +552,14 @@
           Wi-Fi tasks <em>publish events</em> into a control queue; the control task
           <em>publishes commands</em> into an actuator queue and a cloud queue. A small
           shared status struct — <code>mail_present</code>, <code>door_state</code>,
-          <code>lock_state</code>, <code>network_state</code>, <code>lockout_active</code>
+          <code>lock_state</code>, <code>network_state</code>, <code>failed_attempts</code>
           — sits behind a mutex and feeds the local display at ≥ 2 Hz.
         </p>
         <ul class="moment__list">
           <li>SRS-01/02 — IR break-beam confirms delivery in 2–3 s</li>
           <li>SRS-04 — Offline PIN unlock within 2 s</li>
           <li>SRS-05 — Authenticated remote unlock within 5 s</li>
-          <li>SRS-06 — 3 strikes → 30 s keypad lockout</li>
+          <li>SRS-06 — 3 failed PIN attempts → dashboard / email alert</li>
           <li>SRS-10 — Tamper alert published within 5 s</li>
         </ul>
       </article>
@@ -457,7 +644,7 @@
 
     <div class="gallery gallery--3">
       <figure class="card">
-        <img src="images/node_red_frontend.png" alt="Current Node-RED MailMinder dashboard with status, mailbox actions, sensor trend, event history, and OTA button" />
+        <img src="images/node_red_dashboard_current.png" alt="Current Node-RED MailMinder dashboard with status, mailbox actions, sensor trend, event history, and OTA button" />
         <figcaption>
           <strong>Live dashboard.</strong>
           Current Node-RED UI with system status, temp-code / unlock / tamper-clear actions,
@@ -465,26 +652,26 @@
         </figcaption>
       </figure>
       <figure class="card">
-        <img src="images/node_red_backend1.png" alt="Node-RED flow handling MQTT topics and command publishes" />
+        <img src="images/node_red_backend_current.png" alt="Node-RED flow handling MQTT topics and command publishes" />
         <figcaption>
-          <strong>Topic plumbing.</strong>
-          Inbound device topics fan out to dashboard state and event history; outbound
-          commands ride the same broker.
+          <strong>Topic plumbing and command routing.</strong>
+          Inbound device topics fan out to dashboard state, charting, event history, and
+          email alerts; outbound commands publish unlock, temp-code, tamper-clear, and OTA.
         </figcaption>
       </figure>
       <figure class="card">
-        <img src="images/node_red_backend2.png" alt="Second Node-RED flow with command routing and history archival" />
+        <img src="images/firmware_update.png" alt="Firmware update evidence screenshot for OTA flow" />
         <figcaption>
-          <strong>Command routing.</strong>
-          Dashboard actions are mapped into <code>cmd_unlock</code>, <code>cmd_tempcode</code>,
-          <code>cmd_clear_tamper</code>, and <code>cmd_ota</code> topics.
+          <strong>OTA evidence.</strong>
+          The dashboard's OTA button maps into <code>cmd_ota</code>, which wakes the firmware
+          OTA task and starts the HTTP OTAF update path on the SiWG917.
         </figcaption>
       </figure>
     </div>
 
     <div class="cinema__links" style="margin-top:36px">
       <a class="btn btn--ghost" href="http://4.246.123.148:1880/ui/" target="_blank" rel="noopener">Open the live UI →</a>
-      <a class="btn btn--ghost" href="https://drive.google.com/file/d/1Fn-BSGpmjbxcE8X2fidNT2jYQ7OS3igV/view?usp=sharing" target="_blank" rel="noopener">Walkthrough video →</a>
+      <a class="btn btn--ghost" href="http://4.246.123.148:1880/#flow/e9cfaa8ead530e0d" target="_blank" rel="noopener">Open Node-RED flow →</a>
     </div>
   </div>
 </section>
@@ -518,6 +705,53 @@
         <img src="images/g21.jpg" alt="Inside of the MailMinder enclosure — PCBA, breadboard, battery, and servo" />
         <figcaption><strong>Inside.</strong> PCBA + breadboard + battery + servo, packaged into the printed body.</figcaption>
       </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROJECT LINKS & CODEBASE ============== -->
+<section id="links" class="section section--paper">
+  <div class="container">
+    <p class="eyebrow">5. Codebase &amp; project links</p>
+    <h2 class="section__title">Everything needed for review.</h2>
+    <p class="section__lede">
+      These are the required review links: final firmware code, Node-RED instance and flow,
+      Altium 365 PCBA share, and the public GitHub Pages submission.
+    </p>
+
+    <div class="summary-grid">
+      <article class="summary-card">
+        <h3>Embedded C firmware</h3>
+        <p>Final SiWG917 FreeRTOS application code, including task orchestration, MQTT, OTA, and application state.</p>
+        <a class="btn btn--ghost" href="https://github.com/ese5160/final-project-firmware-s26-t04-mailminder/tree/main/0428_sl_final/app/core" target="_blank" rel="noopener">Open firmware code</a>
+      </article>
+      <article class="summary-card">
+        <h3>Node-RED instance</h3>
+        <p>Azure-hosted dashboard for live status, event history, temp code, unlock, tamper clear, and OTA commands.</p>
+        <a class="btn btn--ghost" href="http://4.246.123.148:1880/ui/" target="_blank" rel="noopener">Open dashboard</a>
+      </article>
+      <article class="summary-card">
+        <h3>Node-RED flow</h3>
+        <p>Backend flow with MQTT routing, dashboard widgets, email notification, command publishing, and chart/event handling.</p>
+        <a class="btn btn--ghost" href="http://4.246.123.148:1880/#flow/e9cfaa8ead530e0d" target="_blank" rel="noopener">Open flow editor</a>
+      </article>
+      <article class="summary-card">
+        <h3>Final PCBA on Altium 365</h3>
+        <p>Final board design share link for schematic, layout, 2D/3D review, and manufacturing-file archival.</p>
+        <a class="btn btn--ghost" href="https://upenn-eselabs.365.altium.com/designs/AE5C7E01-FBAF-4B34-BA73-49544CBC40D7" target="_blank" rel="noopener">Open Altium design</a>
+      </article>
+      <article class="summary-card summary-card--wide">
+        <h3>Public GitHub Pages submission</h3>
+        <p>
+          This page is deployed from the <code>gh-pages</code> branch of the final submission
+          repository. The portfolio version keeps the grading artifacts visible while preserving
+          a recruiter-friendly technical narrative.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="https://ese5160.github.io/a11g-final-submission-s26-s26-t04-mailminder/" target="_blank" rel="noopener">Open public site</a>
+          <a class="btn btn--ghost" href="https://github.com/ese5160/a11g-final-submission-s26-s26-t04-mailminder" target="_blank" rel="noopener">Open submission repo</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
