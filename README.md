@@ -9,12 +9,12 @@
 | Team Member Name | Email Address | GitHub Username |
 | ---------------- | ------------- | --------------- |
 | Haoliang Xie         | liang027@seas.upenn.edu     | socold729   |
-| [Name 2]         | [Email 2]     | [Username 2]    |
+| Yubin Guan         | guan1@seas.upenn.edu     |   guan1112  |
 
 **GitHub Repository URL:**
 
 ## 1. Video Presentation
-
+https://youtu.be/0NLSgTLzU24?si=XQApfhHq24TX3WXG
 
 ## 2. Project Summary
 - Give a 2 sentence description of your device.
@@ -89,17 +89,17 @@ http://4.246.123.148:1880/
     Result: We tested it and the sensor met the requirment.
 - SRS-06: The system shall implement a lockout policy. After 3 consecutive failed PIN attempts, the system shall deny further keypad unlock attempts for 30 seconds and update the failed-attempt count and lockout status for cloud publication.
     Result: We replaced this function with a email notification since it is more practical. After 3 consecutive failed PIN attempts, an email notification will be sent to user's phone, telling fail_attempts reaching 3 times.
-- SRS-07 | The system shall update the local display at ≥ 2 Hz with at least: Mail Present, Lock State, Door State, Network State, and Lockout Status.
+- SRS-07 The system shall update the local display at ≥ 2 Hz with at least: Mail Present, Lock State, Door State, Network State, and Lockout Status.
     Result: We tested it and the sensor met the requirment.
-- SRS-08 | The system shall detect door open and door close state changes and publish corresponding door-state events to the cloud within 5 seconds when Wi-Fi is available.
+- SRS-08 The system shall detect door open and door close state changes and publish corresponding door-state events to the cloud within 5 seconds when Wi-Fi is available.
     Result: We tested it and the sensor met the requirment.
-- SRS-09 | The system shall generate and publish a lock or unlock event whenever the lock state changes, within 5 seconds when Wi-Fi is available.
+- SRS-09 The system shall generate and publish a lock or unlock event whenever the lock state changes, within 5 seconds when Wi-Fi is available.
     Result: We tested it and the sensor met the requirment.
-- SRS-10 | The system shall detect tamper conditions and publish a tamper alert event to the cloud within 5 seconds when Wi-Fi is available.
+- SRS-10 The system shall detect tamper conditions and publish a tamper alert event to the cloud within 5 seconds when Wi-Fi is available.
     Result: We tested it and the sensor met the requirment.
-- SRS-11 | The system shall publish periodic status updates containing at least mail presence, door state, lock state, network state, and lockout status at a configurable interval.
+- SRS-11 The system shall publish periodic status updates containing at least mail presence, door state, lock state, network state, and lockout status at a configurable interval.
     Result: We tested it and the sensor met the requirment.
-- SRS-12 | The system shall receive authenticated temporary pickup code updates from the cloud and store them for subsequent keypad-based unlock.
+- SRS-12 The system shall receive authenticated temporary pickup code updates from the cloud and store them for subsequent keypad-based unlock.
     Result: We tested it and the sensor met the requirment.
 ## 4. Project Photos & Screenshots
 ![alt text](4bea3e22ae7663c286a664c542dcaa51.jpg)
