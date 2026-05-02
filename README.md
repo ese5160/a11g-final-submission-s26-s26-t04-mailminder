@@ -11,7 +11,8 @@
 | Haoliang Xie         | liang027@seas.upenn.edu     | socold729   |
 | Yubin Guan         | guan1@seas.upenn.edu     |   guan1112  |
 
-**GitHub Repository URL:**
+**GitHub Repository URL: https://github.com/ese5160/a11g-final-submission-s26-s26-t04-mailminder
+Git website:https://ese5160.github.io/a11g-final-submission-s26-s26-t04-mailminder**
 
 ## 1. Video Presentation
 https://youtu.be/0NLSgTLzU24?si=XQApfhHq24TX3WXG
