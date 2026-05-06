@@ -78,6 +78,12 @@ http://4.246.123.148:1880/
     Result: We tested it and the sensor met the requirment.
 - HRS-05 The device shall include an audible or visual annunciator capable of producing ≥ 55 dBA at 10 cm (buzzer) or a clearly visible status indicator LED.
     Result: We discarded this because we thought this is unnecessary since we have email notifications.
+- HRS-06 The hardware shall include an MCU capable of interfacing with required peripherals through I2C, SPI, PWM, and GPIO.
+    Result: We tested it and confirmed that the MCU supported all required peripheral interfaces.
+- HRS-07 The device shall include a power architecture capable of operating from a 3.7 V rechargeable Li-ion battery and accepting external USB power for charging and system operation.
+    Result: We tested it and confirmed that the device could operate from the battery and accept USB power as intended.
+- HRS-08 The power architecture shall provide a regulated 5 V rail and a regulated 3.3 V rail for the actuator, MCU, sensors, and display modules.
+    Result: We tested it and confirmed that both power rails operated as required.
 - SRS-01 The system shall detect an insertion trigger from the IR break-beam input within 50 ms of beam interruption.
     Result: We tested it and the sensor met the requirment.
 - SRS-02: Upon an IR insertion trigger, the system shall open a delivery confirmation window of 2–3 seconds during which it evaluates the FSR change to confirm delivery.
@@ -114,7 +120,7 @@ http://4.246.123.148:1880/
 ![alt text](g17.jpg)
 ![alt text](image.png)
 ![alt text](image-1.png)
-![alt text](A08G_blockdiagram.drawio.png)
+![alt text](<ESE5160-S26-DetailedBlockDiagram.drawio (3).png>)
 ## 5. Codebase
 
 Do *not* commit any of your source code to this repository. Rather, provide links to the other GitHub repository you've already been using with your firmware.
