@@ -217,8 +217,8 @@
 
     <div class="gallery gallery--wiring" style="margin-top:32px">
       <figure class="card card--diagram">
-        <img src="images/hardware_architecture.svg" alt="Updated MailMinder system-level block diagram showing sensors, keypad, LCD, servo lock, and SiWG917 connections" />
-        <figcaption><strong>Updated system-level block diagram.</strong> The final implemented system: IR break-beam, IMU, reed switch, keypad, TFT LCD, servo lock, and SiWG917 4-layer PCBA.</figcaption>
+        <img src="images/final_system_block_diagram.png" alt="MailMinder system-level block diagram showing FreeRTOS tasks, sensors, actuator control, Wi-Fi, and system control" />
+        <figcaption><strong>System-level block diagram.</strong> FreeRTOS task split and command / data paths across keypad input, actuator control, sensor reading, Wi-Fi, and system control.</figcaption>
       </figure>
     </div>
 
@@ -280,6 +280,9 @@
           <tr><td>HRS-03</td><td><span class="badge badge--met">Met</span></td><td>IMU provided 3-axis acceleration data for tamper and disturbance monitoring.</td></tr>
           <tr><td>HRS-04</td><td><span class="badge badge--met">Met</span></td><td>Servo moved between locked and unlocked mechanical positions with at least 60 degrees of travel.</td></tr>
           <tr><td>HRS-05</td><td><span class="badge badge--changed">Changed</span></td><td>Audible / LED annunciator was not used in the final device; status is shown on LCD, dashboard, and notifications.</td></tr>
+          <tr><td>HRS-06</td><td><span class="badge badge--met">Met</span></td><td>The hardware shall include an MCU capable of interfacing with required peripherals through I2C, SPI, PWM, and GPIO. We tested it and confirmed that the MCU supported all required peripheral interfaces.</td></tr>
+          <tr><td>HRS-07</td><td><span class="badge badge--met">Met</span></td><td>The device shall include a power architecture capable of operating from a 3.7 V rechargeable Li-ion battery and accepting external USB power for charging and system operation. We tested it and confirmed that the device could operate from the battery and accept USB power as intended.</td></tr>
+          <tr><td>HRS-08</td><td><span class="badge badge--met">Met</span></td><td>The power architecture shall provide a regulated 5 V rail and a regulated 3.3 V rail for the actuator, MCU, sensors, and display modules. We tested it and confirmed that both power rails operated as required.</td></tr>
           <tr><td>SRS-01</td><td><span class="badge badge--met">Met</span></td><td>IR break-beam insertion events were detected within the required response window.</td></tr>
           <tr><td>SRS-02</td><td><span class="badge badge--changed">Changed</span></td><td>FSR confirmation was removed; the final system marks mail present from the IR insertion path and cloud state update.</td></tr>
           <tr><td>SRS-03</td><td><span class="badge badge--met">Met</span></td><td>Delivery events publish to the cloud over MQTT/TLS when Wi-Fi is available.</td></tr>
@@ -320,7 +323,7 @@
       <figure class="card"><img src="images/g17.jpg" alt="Altium 3D render bottom side of the PCBA" /><figcaption><strong>Altium 3D — bottom.</strong> Bottom-side routing and silkscreen view.</figcaption></figure>
       <figure class="card card--wide"><img src="images/node_red_dashboard_current.png" alt="Node-RED MailMinder dashboard screenshot" /><figcaption><strong>Node-RED dashboard.</strong> Live status, actions, sensor trend, event history, and OTA button.</figcaption></figure>
       <figure class="card card--wide"><img src="images/node_red_backend_current.png" alt="Node-RED backend flow screenshot" /><figcaption><strong>Node-RED backend.</strong> MQTT input, event processing, email path, command publish, chart, and OTA command nodes.</figcaption></figure>
-      <figure class="card card--diagram"><img src="images/hardware_architecture.svg" alt="Updated MailMinder block diagram" /><figcaption><strong>Block diagram.</strong> Updated final system-level diagram without unused components.</figcaption></figure>
+      <figure class="card card--diagram"><img src="images/final_system_block_diagram.png" alt="MailMinder final system block diagram" /><figcaption><strong>Block diagram.</strong> Final task-level system diagram used for the submission.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -464,16 +467,16 @@
 <section id="wiring" class="section section--paper-2">
   <div class="container">
     <p class="eyebrow">Bench wiring</p>
-    <h2 class="section__title">From pin map to bench harness.</h2>
+    <h2 class="section__title">From task map to bench harness.</h2>
     <p class="section__lede">
-      The wiring plan started as a raw block diagram, then became a traceable bench harness:
-      every sensor, keypad row / column, display line, and servo signal was mapped before the
-      enclosure build.
+      The integration plan started as a task-level block diagram, then became a traceable bench
+      harness: keypad input, actuator control, sensor reading, Wi-Fi messaging, and system control
+      were validated together before the enclosure build.
     </p>
     <div class="gallery gallery--wiring">
       <figure class="card card--diagram">
-        <img src="images/hardware_architecture.svg" alt="Polished MailMinder hardware wiring diagram showing GPIO, I2C, SPI, PWM, keypad, LCD, sensors, and servo assignments" />
-        <figcaption><strong>Clean wiring map.</strong> GPIO / I2C / SPI / PWM assignments, pull-up / pulldown choices, and the revised LCD / keypad pinout in one view.</figcaption>
+        <img src="images/final_system_block_diagram.png" alt="MailMinder task-level block diagram showing user input, actuator control, sensor reading, Wi-Fi, and system control tasks" />
+        <figcaption><strong>Task-level integration map.</strong> Keypad input, actuator status, sensor data, remote unlock, temporary code, delivery notification, and alarm log paths in one view.</figcaption>
       </figure>
       <figure class="card">
         <img src="images/hardware_connection.JPG" alt="Custom PCBA wired to IR break-beam, IMU, magnetic switch, keypad and servo" />
