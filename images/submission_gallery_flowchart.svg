@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1073 996" role="img" aria-labelledby="title desc">
+  <title id="title">MailMinder system flow diagram</title>
+  <desc id="desc">System flow diagram for MailMinder showing power, sensors, wireless MCU, actuators, physical user interface, cloud service, user, and roommates.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111"/>
+    </marker>
+    <style>
+      .zone{fill:#d9e8ff;stroke:#6d9df2;stroke-width:1;stroke-dasharray:3 3}
+      .box{fill:#fff;stroke:#111;stroke-width:1.2}
+      .mcu{fill:#d9e8ff;stroke:#5f8ed9;stroke-width:1.2}
+      .line{stroke:#111;stroke-width:1.4;fill:none;marker-end:url(#arrow)}
+      .plain{stroke:#111;stroke-width:1.4;fill:none}
+      .text{font-family:Arial, Helvetica, sans-serif;fill:#111;font-size:13px}
+      .small{font-family:Arial, Helvetica, sans-serif;fill:#111;font-size:12px}
+      .title{font-family:Arial, Helvetica, sans-serif;fill:#111;font-size:32px;font-weight:700}
+      .zone-title{font-family:Arial, Helvetica, sans-serif;fill:#111;font-size:15px;font-weight:700}
+      .port-green{fill:#d9f1d0;stroke:#6eaf68;stroke-width:1}
+      .port-red{fill:#ffd4d6;stroke:#d65c63;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1073" height="996" fill="#fff" stroke="#111"/>
+
+  <text class="title" x="452" y="126">MailMinder</text>
+
+  <rect class="zone" x="20" y="30" width="350" height="190"/>
+  <text class="zone-title" x="28" y="50">Power</text>
+  <rect class="box" x="50" y="60" width="120" height="60" rx="8"/>
+  <text class="text" x="70" y="88">A Li-Ion battery</text>
+  <text class="text" x="100" y="103">3.7V</text>
+  <rect class="box" x="220" y="60" width="120" height="60" rx="8"/>
+  <text class="text" x="229" y="95">5V Boost Regulator</text>
+  <circle class="port-red" cx="325" cy="65" r="5"/>
+  <rect class="box" x="50" y="150" width="120" height="60" rx="8"/>
+  <text class="text" x="84" y="185">3.3V LDO</text>
+  <circle class="port-green" cx="155" cy="156" r="5"/>
+  <path class="line" d="M170 90 L220 90"/>
+  <path class="line" d="M110 120 L110 150"/>
+
+  <rect class="zone" x="20" y="230" width="240" height="304"/>
+  <text class="zone-title" x="32" y="250">Sensors</text>
+  <rect class="box" x="80" y="260" width="120" height="60" rx="8"/>
+  <text class="text" x="129" y="289">IMU</text>
+  <text class="text" x="97" y="304">(Accelerometer)</text>
+  <circle class="port-green" cx="185" cy="266" r="5"/>
+  <rect class="box" x="80" y="350" width="120" height="60" rx="8"/>
+  <text class="text" x="91" y="379">Infrared break-beam</text>
+  <text class="text" x="123" y="394">sensor</text>
+  <circle class="port-green" cx="185" cy="356" r="5"/>
+  <rect class="box" x="80" y="440" width="120" height="60" rx="8"/>
+  <text class="text" x="89" y="467">Door status sensor</text>
+  <text class="text" x="93" y="482">(reed switch +</text>
+  <text class="text" x="112" y="497">magnet)</text>
+  <circle class="port-green" cx="185" cy="446" r="5"/>
+  <circle class="port-green" cx="185" cy="526" r="5"/>
+
+  <rect class="mcu" x="360" y="271" width="120" height="310" rx="17"/>
+  <text class="text" x="382" y="422">Wireless MCU</text>
+  <text class="text" x="385" y="438">(SIWG917Y)</text>
+  <circle class="port-green" cx="461" cy="276" r="5"/>
+
+  <path class="line" d="M200 290 L360 290"/>
+  <text class="small" x="305" y="286">I2C</text>
+  <path class="line" d="M200 380 L360 380"/>
+  <text class="small" x="288" y="376">GPIO</text><text class="small" x="325" y="376">x 1</text>
+  <path class="line" d="M200 470 L360 470"/>
+  <text class="small" x="288" y="466">GPIO</text><text class="small" x="325" y="466">x 1</text>
+
+  <rect class="zone" x="545" y="260" width="200" height="138"/>
+  <text class="zone-title" x="662" y="250">Actuators</text>
+  <rect class="box" x="580" y="290" width="120" height="60" rx="8"/>
+  <text class="text" x="608" y="324">Servo Motor</text>
+  <circle class="port-red" cx="695" cy="296" r="5"/>
+  <circle class="port-green" cx="685" cy="336" r="5"/>
+  <path class="line" d="M480 329 L580 329"/>
+  <text class="small" x="482" y="319">PWM</text><text class="small" x="525" y="319">x 1</text>
+
+  <g transform="translate(773 298)">
+    <rect x="0" y="0" width="75" height="47" fill="none" stroke="#1d2a38" stroke-width="4"/>
+    <path d="M3 3 L37 32 L72 3" fill="none" stroke="#1d2a38" stroke-width="4"/>
+    <path d="M3 44 L29 22 M72 44 L46 22" fill="none" stroke="#1d2a38" stroke-width="4"/>
+  </g>
+  <path class="line" d="M700 320 L773 320"/>
+
+  <rect class="zone" x="541" y="481" width="200" height="170"/>
+  <rect class="box" x="580" y="490" width="120" height="60" rx="8"/>
+  <text class="text" x="628" y="524">LCD</text>
+  <circle class="port-green" cx="685" cy="496" r="5"/>
+  <rect class="box" x="580" y="561" width="120" height="60" rx="8"/>
+  <text class="text" x="613" y="595">Keyboard</text>
+  <circle class="port-green" cx="685" cy="567" r="5"/>
+  <text class="zone-title" x="567" y="641">Physical User Interface</text>
+  <path class="line" d="M480 516 L580 516"/>
+  <text class="small" x="499" y="513">SPI</text>
+  <path class="plain" d="M580 591 L420 591"/>
+  <path class="line" d="M420 591 L420 581"/>
+  <text class="small" x="496" y="588">GPIO</text>
+
+  <path class="plain" d="M408 700 L408 591"/>
+  <path class="line" d="M408 591 L408 581"/>
+  <text class="small" x="416" y="634">Wifi</text>
+  <path class="line" d="M410 581 L410 700"/>
+
+  <g transform="translate(374 700)">
+    <circle cx="37" cy="37" r="36" fill="#0c8ed6" stroke="#126b9c" stroke-width="1"/>
+    <path d="M11 27 C26 21 29 6 44 7 C40 17 52 18 58 27 C49 29 49 40 38 42 C31 34 21 41 11 27Z" fill="#62bf44"/>
+    <path d="M29 62 C38 56 48 58 62 50 C58 66 43 75 29 62Z" fill="#62bf44"/>
+    <path d="M14 45 C19 50 20 56 13 61 C7 55 6 50 14 45Z" fill="#62bf44"/>
+  </g>
+  <text class="small" x="373" y="790">Cloud Service</text>
+
+  <text class="small" x="457" y="705">Offline code</text>
+  <text class="small" x="550" y="705">Unlock</text>
+  <text class="small" x="611" y="705">Temporary</text>
+  <text class="small" x="628" y="720">code</text>
+  <path class="line" d="M682 720 L450 720"/>
+  <text class="small" x="479" y="759">Mail detection</text>
+  <text class="small" x="609" y="759">Alarm</text>
+  <path class="line" d="M450 741 L682 741"/>
+
+  <g transform="translate(681 685)">
+    <circle cx="24" cy="8" r="8" fill="#fff" stroke="#111"/>
+    <path d="M24 16 L24 60 M5 35 L24 25 L43 35 M24 60 L10 82 M24 60 L38 82" stroke="#111" fill="none"/>
+    <text class="small" x="15" y="80">Me</text>
+  </g>
+  <path class="line" d="M682 735 L705 735"/>
+
+  <path class="plain" d="M740 590 L1010 590 L1010 820 L850 820 L850 730 L740 730"/>
+  <path class="line" d="M740 590 L700 590"/>
+  <text class="small" x="762" y="721">Offline code</text>
+  <text class="small" x="752" y="900">Temporary code</text>
+
+  <text class="small" x="602" y="830">Temporary code</text>
+  <path class="line" d="M706 766 L706 882"/>
+  <g transform="translate(687 884)">
+    <circle cx="24" cy="8" r="8" fill="#fff" stroke="#111"/>
+    <path d="M24 16 L24 60 M5 35 L24 25 L43 35 M24 60 L10 82 M24 60 L38 82" stroke="#111" fill="none"/>
+    <text class="small" x="-15" y="84">Roommates</text>
+  </g>
+</svg>
